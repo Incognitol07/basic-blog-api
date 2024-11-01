@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from models import db, Post
 from config import Config
+from sqlalchemy.exc import NoResultFound
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -44,10 +46,13 @@ def get_post(id):
 # Delete Blog Post - API
 @app.route('/delete-post/<int:id>', methods=['DELETE'])
 def delete_post(id):
-    post = Post.query.get_or_404(id)
-    db.session.delete(post)
-    db.session.commit()
-    return jsonify('{ "message" : "Deleted post successfully" }')
+    try:
+        post = Post.query.filter_by(id=id).one() 
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify({ "message": "Deleted post successfully" })
+    except NoResultFound:
+        return jsonify({ "error": "Post not found" }), 404 
 
 @app.route('/posts/search', methods=['GET'])
 def search_posts():
