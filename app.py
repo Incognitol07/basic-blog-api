@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from models import db
+from models import db, Post
 from config import Config
 
 app = Flask(__name__)
