@@ -42,9 +42,12 @@ def get_post(id):
     ...
 
 # Delete Blog Post - API
-@app.route('/delete-post/<int:id>', methods=['POST'])
+@app.route('/delete-post/<int:id>', methods=['DELETE'])
 def delete_post(id):
-    ...
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return jsonify('{ "message" : "Deleted post successfully" }')
 
 @app.route('/posts/search', methods=['GET'])
 def search_posts():
