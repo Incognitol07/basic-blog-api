@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from models import db, Post
 from config import Config
 
@@ -16,7 +16,18 @@ def home():
 # Create Blog Post - API
 @app.route('/posts', methods=['POST'])
 def create_post():
-    ...
+    data = request.get_json()
+    if not data["title"] or not data["author"] or not data["content"] or not data["category"]:
+        return jsonify('{"error":"Title, Content, Author and Category required"}')
+    new_post = Post(
+        title=data["title"],
+        content=data["content"],
+        author = data["author"],
+        category=data["category"],
+    )
+    db.session.add(new_post)
+    db.session.commit()
+    return jsonify('{"message":"Blog post created"}')
 
 
 # Read All Blog Posts - API
@@ -39,5 +50,5 @@ def delete_post(id):
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Ensure tables are created
+        db.create_all()
     app.run(debug=True)
