@@ -46,6 +46,29 @@ def get_post(id):
 def delete_post(id):
     ...
 
+@app.route('/posts/search', methods=['GET'])
+def search_posts():
+    term = request.args.get('term', '')
+    posts = Post.query.filter(
+        Post.title.contains(term) |
+        Post.content.contains(term) |
+        Post.category.contains(term) |
+        Post.author.contains(term) |
+        Post.created_at.contains(term)
+    ).all()
+    if not posts:
+        return jsonify('{ "message" : "Post not found" }')
+    posts_list = [
+        {
+            'id': post.id,
+            'title': post.title,
+            'content': post.content,
+            'category': post.category,
+            'created_at': post.created_at
+        } for post in posts
+    ]
+    return jsonify(posts_list), 200
+
 
 
 if __name__ == '__main__':
