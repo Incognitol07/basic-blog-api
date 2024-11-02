@@ -77,6 +77,30 @@ def search_posts():
     ]
     return jsonify(posts_list), 200
 
+#Edit Blog Post - API
+@app.route('/edit-post/<int:id>', methods=['PUT'])
+def update_post(id):
+    try:
+        post = Post.query.filter_by(id=id).one()
+        data = request.get_json()
+
+        # Check for missing required fields
+        if not data.get("title") or not data.get("author") or not data.get("content") or not data.get("category"):
+            return jsonify({ "error": "Title, Content, Author, or Category are required" }), 400
+
+        # Update post fields
+        post.title = data.get('title', post.title)
+        post.content = data.get('content', post.content)
+        post.author = data.get('author', post.author)
+        post.category = data.get('category', post.category)
+
+        db.session.commit()
+        return jsonify({ "message": "Post updated successfully" }), 200
+
+    except NoResultFound:
+        return jsonify({ "error": "Post not found" }), 404
+
+
 
 
 if __name__ == '__main__':
