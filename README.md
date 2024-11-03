@@ -85,7 +85,7 @@ A simple blog API built with FastAPI, SQLAlchemy, and SQLite. This API supports 
 1. Clone the repository:
     ```bash
     git clone https://github.com/Incognitol07/basic-blog-api.git
-    cd blog-api
+    cd basic-blog-api
     ```
 
 2. Install dependencies:
