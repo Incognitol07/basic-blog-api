@@ -32,7 +32,7 @@ class Post(Base):
     content = Column(Text, nullable=False)
     author = Column(String(50), nullable=False)
     category = Column(String(50), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now())
 
 # Create the database tables
 Base.metadata.create_all(bind=engine)
