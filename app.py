@@ -35,13 +35,32 @@ def create_post():
 # Read All Blog Posts - API
 @app.route('/posts', methods=['GET'])
 def get_all_posts():
-    ...
+    posts = Post.query.all()
+    posts_list = [
+        {
+            'id': post.id,
+            'title': post.title,
+            'author': post.author,
+            'content': post.content,
+            'category': post.category,
+            'created_at': post.created_at
+        } for post in posts
+    ]
+    return jsonify(posts_list), 200
 
 
 # Read a Single Blog Post - API
 @app.route('/posts/<int:id>', methods=['GET'])
 def get_post(id):
-    ...
+    post = Post.query.get_or_404(id)
+    return jsonify({
+        'id': post.id,
+        'title': post.title,
+        'author': post.author,
+        'content': post.content,
+        'category': post.category,
+        'created_at': post.created_at
+    }), 200
 
 # Delete Blog Post - API
 @app.route('/delete-post/<int:id>', methods=['DELETE'])
@@ -65,11 +84,12 @@ def search_posts():
         Post.created_at.contains(term)
     ).all()
     if not posts:
-        return jsonify('{ "message" : "Post not found" }')
+        return jsonify({ "message" : "Post not found" })
     posts_list = [
         {
             'id': post.id,
             'title': post.title,
+            'author': post.author,
             'content': post.content,
             'category': post.category,
             'created_at': post.created_at
