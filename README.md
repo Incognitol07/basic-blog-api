@@ -106,9 +106,9 @@ A simple blog API built with FastAPI, SQLAlchemy, and SQLite. This API supports 
 5. Go to `http://127.0.0.1:8000/docs` to access the interactive API documentation.
 
 ## Project Structure
-basic-blog-api 
-├── main.py # Entry point for the API 
-├── models.py # Database models and ORM setup 
-├── config.py # Database configuration (if applicable) 
-├── requirements.txt # Project dependencies 
-└── README.md # Project documentation
+basic-blog-api \
+├── main.py # Entry point for the API \
+├── models.py # Database models and ORM setup \
+├── config.py # Database configuration (if applicable) \
+├── requirements.txt # Project dependencies \
+└── README.md # Project documentation\
