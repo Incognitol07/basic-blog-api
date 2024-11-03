@@ -107,7 +107,7 @@ A simple blog API built with FastAPI, SQLAlchemy, and SQLite. This API supports 
 
 ## Project Structure
 basic-blog-api \
-├── main.py # Entry point for the API \
+├── app.py # Entry point for the API \
 ├── models.py # Database models and ORM setup \
 ├── config.py # Database configuration (if applicable) \
 ├── requirements.txt # Project dependencies \
